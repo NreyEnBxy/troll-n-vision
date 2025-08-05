@@ -6,7 +6,16 @@
   <title>troll n vision</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
-
+  
+  <!-- iOS specific meta tags for better video handling -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://files.catbox.moe/usucqn.png" as="image">
+  <link rel="preload" href="https://files.catbox.moe/vx6r8e.png" as="image">
+  <link rel="preload" href="https://files.catbox.moe/sjz7za.jpg" as="image">
+  
   <style>
     * {
       margin: 0;
@@ -23,6 +32,7 @@
       background-color: #000;
       color: #fff;
       overflow-x: hidden;
+      background: radial-gradient(circle at top, #1a1a1a, #000);
     }
 
     .header {
@@ -40,16 +50,22 @@
       text-decoration: none;
       z-index: 10;
       cursor: pointer;
+      background: rgba(255, 0, 127, 0.2);
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
     }
 
     .about-link:hover {
-      text-decoration: underline;
+      background: rgba(255, 0, 127, 0.3);
+      transform: translateY(-2px);
     }
 
     .animated-logo {
       width: 140px;
       animation: floatLogo 2.5s ease-in-out infinite alternate;
       display: block;
+      filter: drop-shadow(0 0 5px rgba(255, 0, 127, 0.5));
     }
 
     @keyframes floatLogo {
@@ -66,6 +82,7 @@
       color: #bbb;
       margin-top: 10px;
       animation: moveUp 2s ease-in-out infinite alternate;
+      max-width: 500px;
     }
 
     @keyframes moveUp {
@@ -75,13 +92,72 @@
 
     #videoContainer {
       width: 100%;
+      position: relative;
+      background: #000;
+      min-height: 200px;
+      margin-top: 20px;
     }
 
     video {
       width: 100%;
       height: auto;
-      display: none;
+      display: block;
       object-fit: cover;
+      background: #000;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      height: 0;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+      background: linear-gradient(45deg, #1a1a1a, #2a0a1a);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    .play-button {
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 0, 127, 0.8);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 2;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+    }
+    
+    .play-button:hover {
+      transform: scale(1.1);
+      background: rgba(255, 0, 127, 1);
+    }
+
+    .play-button::after {
+      content: "";
+      border-style: solid;
+      border-width: 15px 0 15px 25px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 5px;
+    }
+
+    .play-text {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #bbb;
+      font-size: 14px;
+      z-index: 2;
     }
 
     .about-section {
@@ -91,6 +167,12 @@
       transform: translateY(30px);
       transition: all 1s ease;
       color: white;
+      background: rgba(10, 10, 10, 0.7);
+      border-radius: 20px;
+      margin: 30px 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .about-section.show {
@@ -99,15 +181,19 @@
     }
 
     .about-section h2 {
-      font-size: 24px;
+      font-size: 28px;
       margin-bottom: 15px;
+      color: #ff007f;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .about-section p {
-      font-size: 15px;
+      font-size: 16px;
       max-width: 600px;
-      margin: auto;
-      line-height: 1.6;
+      margin: 20px auto;
+      line-height: 1.7;
+      color: #ddd;
     }
 
     .blog-section {
@@ -115,7 +201,7 @@
       flex-wrap: wrap;
       justify-content: center;
       padding: 30px 15px;
-      gap: 20px;
+      gap: 30px;
     }
 
     .blog-card {
@@ -129,6 +215,8 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       opacity: 0;
       transform: translateY(30px);
+      position: relative;
+      border: 1px solid rgba(255, 0, 127, 0.1);
     }
 
     .blog-card.show {
@@ -147,8 +235,8 @@
     }
 
     .blog-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.3);
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.4);
     }
 
     .blog-card img {
@@ -156,6 +244,22 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .blog-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent 60%, rgba(0,0,0,0.8));
+      pointer-events: none;
     }
 
     footer {
@@ -163,78 +267,387 @@
       color: #666;
       font-size: 13px;
       padding: 30px 15px;
+      border-top: 1px solid #222;
+      margin-top: 20px;
+    }
+    
+    .brand-highlight {
+      color: #ff007f;
+      font-weight: 600;
+    }
+    
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 3;
+      padding: 20px;
+    }
+    
+    .video-overlay.hidden {
+      display: none;
+    }
+    
+    .video-overlay-text {
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      max-width: 80%;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .overlay-button {
+      background: #ff007f;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 0, 127, 0.3);
+    }
+    
+    .overlay-button:hover {
+      background: #e0006f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 0, 127, 0.4);
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      margin: 40px 0 20px;
+      color: #ff007f;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #ff007f;
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 0, 127, 0.1) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, rgba(0, 100, 255, 0.1) 0%, transparent 40%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease;
+    }
+    
+    .preloader-logo {
+      width: 80px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.7; }
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #ff007f;
+      transform: translateY(-3px);
+    }
+    
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header (left-aligned content) -->
-  <div class="header">
-    <a href="#about" class="about-link" onclick="showAbout()">about us</a>
-    <a href="https://www.facebook.com/share/1Vh3eAcivC/" target="_blank">
-      <img src="https://files.catbox.moe/luswcm.png" alt="Troll N Vision Logo" class="animated-logo">
-    </a>
-    <div class="tagline">
-      Truth comes first. After that, I'm buying 32 no. house with just 10% down
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <img src="https://files.catbox.moe/luswcm.png" alt="Loading" class="preloader-logo">
+  </div>
+  
+  <!-- Background effects -->
+  <div class="gradient-bg"></div>
+  
+  <div class="content-wrapper">
+    <!-- Header (left-aligned content) -->
+    <div class="header">
+      <a href="#about" class="about-link" onclick="showAbout()">about us</a>
+      <a href="https://www.facebook.com/share/1Vh3eAcivC/" target="_blank">
+        <img src="https://files.catbox.moe/luswcm.png" alt="Troll N Vision Logo" class="animated-logo">
+      </a>
+      <div class="tagline">
+        Truth comes first. After that, I'm buying 32 no. house with just 10% down
+      </div>
     </div>
-  </div>
 
-  <!-- Video -->
-  <div id="videoContainer">
-    <video id="introVideo" playsinline muted>
-      <source src="https://res.cloudinary.com/duivryuv6/video/upload/v1754392309/New_Project_2_B53800D_jgcnpj.mp4" type="video/mp4" />
-    </video>
-  </div>
+    <!-- Video Section with Fallback -->
+    <div id="videoContainer">
+      <!-- Video placeholder for restrictive environments -->
+      <div id="videoPlaceholder" class="video-placeholder">
+        <div class="play-button"></div>
+        <div class="play-text">Tap to play the intro video</div>
+      </div>
+      
+      <!-- Video overlay for blocked autoplay -->
+      <div id="videoOverlay" class="video-overlay">
+        <div class="video-overlay-text">
+          To experience our content, please tap the button below to enable video playback.
+        </div>
+        <button id="enableVideoButton" class="overlay-button">Enable Video Playback</button>
+      </div>
+      
+      <!-- Actual video element -->
+      <video id="introVideo" playsinline muted>
+        <source src="https://res.cloudinary.com/duivryuv6/video/upload/v1754392309/New_Project_2_B53800D_jgcnpj.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
-  <!-- About Us Section -->
-  <div id="about" class="about-section">
-    <h2>About Us</h2>
-    <p>
-      Troll N Vision is a fearless movement of satire, fact, and fun.
-      We roast, we reveal, and we raise awareness—without filters.
-      Whether it’s politics or pop culture, we say what others won’t.
-      Powered by logic, memes, and a little bit of madness.
-    </p>
-  </div>
+    <!-- About Us Section -->
+    <div id="about" class="about-section">
+      <h2>About Us</h2>
+      <p>
+        <span class="brand-highlight">Troll N Vision</span> is a fearless movement of satire, fact, and fun.
+        We roast, we reveal, and we raise awareness—without filters.
+        Whether it’s politics or pop culture, we say what others won’t.
+        Powered by logic, memes, and a little bit of madness.
+      </p>
+      
+      <div class="social-links">
+        <a href="https://facebook.com" target="_blank" class="social-link">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"></path>
+          </svg>
+        </a>
+        <a href="https://instagram.com" target="_blank" class="social-link">
+          <svg viewBox="0 0 24 24">
+            <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path>
+          </svg>
+        </a>
+        <a href="https://twitter.com" target="_blank" class="social-link">
+          <svg viewBox="0 0 24 24">
+            <path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
 
-  <!-- Blog Section -->
-  <div class="blog-section" id="blogSection">
-    <div class="blog-card"><a href="https://www.facebook.com/share/p/1BL5M5DJzm/" target="_blank"><img src="https://files.catbox.moe/usucqn.png" /></a></div>
-   <div class="blog-card"><a href="https://www.facebook.com/61558034593933/posts/pfbid087DnwYnVaqMchazwUBYsyALdosskhvNwg4zqNwHTrMotLh2r4khhdrR3wAwnZVPol/?mibextid=Nif5oz" target="_blank"><img src="https://files.catbox.moe/vx6r8e.png" /></a></div>
-    <div class="blog-card"><a href="https://www.facebook.com/share/p/1GVqbQYbZk/" target="_blank"><img src="https://files.catbox.moe/sjz7za.jpg" /></a></div>
-
+    <!-- Blog Section -->
+    <h2 class="section-title">Latest Content</h2>
+    <div class="blog-section" id="blogSection">
+      <div class="blog-card">
+        <a href="https://www.facebook.com/share/p/1BL5M5DJzm/" target="_blank">
+          <img src="https://files.catbox.moe/usucqn.png" alt="Political Satire" loading="eager" />
+        </a>
+      </div>
+      <div class="blog-card">
+        <a href="https://www.facebook.com/61558034593933/posts/pfbid087DnwYnVaqMchazwUBYsyALdosskhvNwg4zqNwHTrMotLh2r4khhdrR3wAwnZVPol/?mibextid=Nif5oz" target="_blank">
+          <img src="https://files.catbox.moe/vx6r8e.png" alt="Social Commentary" loading="eager" />
+        </a>
+      </div>
+      <div class="blog-card">
+        <a href="https://www.facebook.com/share/p/1GVqbQYbZk/" target="_blank">
+          <img src="https://files.catbox.moe/sjz7za.jpg" alt="Cultural Critique" loading="eager" />
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- Script -->
   <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const video = document.getElementById('introVideo');
-        const blogSection = document.getElementById('blogSection');
+    // Preload images immediately
+    const imageUrls = [
+      "https://files.catbox.moe/usucqn.png",
+      "https://files.catbox.moe/vx6r8e.png",
+      "https://files.catbox.moe/sjz7za.jpg"
+    ];
 
-        video.style.display = 'block';
-        video.play();
-
-        video.onended = () => {
-          blogSection.scrollIntoView({ behavior: 'smooth' });
-
-          const cards = document.querySelectorAll('.blog-card');
-          cards.forEach((card, i) => {
-            setTimeout(() => {
-              card.classList.add('show');
-            }, i * 200);
-          });
-        };
-      }, 300);
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.src = url;
     });
 
+    // Hide preloader when everything is loaded
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('preloader').style.display = 'none';
+        }, 500);
+      }, 1000);
+      
+      setupVideo();
+    });
+
+    function setupVideo() {
+      const video = document.getElementById('introVideo');
+      const videoPlaceholder = document.getElementById('videoPlaceholder');
+      const videoOverlay = document.getElementById('videoOverlay');
+      const enableVideoButton = document.getElementById('enableVideoButton');
+      const blogSection = document.getElementById('blogSection');
+      
+      // Initially hide the video and overlay
+      video.style.display = 'none';
+      videoOverlay.classList.add('hidden');
+      
+      // Detect if we're in a restrictive environment
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isFacebookApp = navigator.userAgent.indexOf("FBAN") > -1 || 
+                           navigator.userAgent.indexOf("FBAV") > -1;
+      
+      // Try to play video automatically for non-restrictive environments
+      if (!isIOS && !isFacebookApp) {
+        setTimeout(() => {
+          video.style.display = 'block';
+          videoPlaceholder.style.display = 'none';
+          
+          const playPromise = video.play();
+          
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                // Autoplay worked
+                videoOverlay.classList.add('hidden');
+              })
+              .catch(error => {
+                // Autoplay failed, show overlay
+                videoOverlay.classList.remove('hidden');
+              });
+          }
+          
+          video.onended = () => {
+            blogSection.scrollIntoView({ behavior: 'smooth' });
+            animateBlogCards();
+          };
+        }, 500);
+      } else {
+        // For restrictive environments, show the placeholder
+        videoPlaceholder.style.display = 'block';
+      }
+      
+      // Handle placeholder click (for restrictive environments)
+      videoPlaceholder.addEventListener('click', () => {
+        video.style.display = 'block';
+        videoPlaceholder.style.display = 'none';
+        
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              videoOverlay.classList.add('hidden');
+            })
+            .catch(error => {
+              videoOverlay.classList.remove('hidden');
+            });
+        }
+        
+        video.onended = () => {
+          blogSection.scrollIntoView({ behavior: 'smooth' });
+          animateBlogCards();
+        };
+      });
+      
+      // Handle overlay button click
+      enableVideoButton.addEventListener('click', () => {
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              videoOverlay.classList.add('hidden');
+            })
+            .catch(error => {
+              // Still failed, keep overlay visible
+              console.error('Video playback failed:', error);
+            });
+        }
+      });
+      
+      // Handle about link
+      const aboutLink = document.querySelector('.about-link');
+      aboutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showAbout();
+        document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+    
     function showAbout() {
       const about = document.getElementById('about');
       about.classList.add('show');
     }
+    
+    function animateBlogCards() {
+      const cards = document.querySelectorAll('.blog-card');
+      cards.forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.add('show');
+        }, i * 200);
+      });
+    }
   </script>
 
-  <footer>&copy; 2025 troll n vision. All rights reserved.</footer>
+  <footer>&copy; 2025 <span class="brand-highlight">troll n vision</span>. All rights reserved.</footer>
 
 </body>
 </html>
