@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>troll n vision</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      position: relative;
+      padding: 30px 20px 10px;
+    }
+
+    .about-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .about-link:hover {
+      text-decoration: underline;
+    }
+
+    .animated-logo {
+      width: 140px;
+      animation: floatLogo 2.5s ease-in-out infinite alternate;
+      display: block;
+    }
+
+    @keyframes floatLogo {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-6px);
+      }
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: #bbb;
+      margin-top: 10px;
+      animation: moveUp 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes moveUp {
+      from { transform: translateY(0); }
+      to { transform: translateY(-3px); }
+    }
+
+    #videoContainer {
+      width: 100%;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      display: none;
+      object-fit: cover;
+    }
+
+    .about-section {
+      padding: 60px 20px 50px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+      color: white;
+    }
+
+    .about-section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-section h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .about-section p {
+      font-size: 15px;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .blog-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 30px 15px;
+      gap: 20px;
+    }
+
+    .blog-card {
+      background-color: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 90%;
+      max-width: 280px;
+      aspect-ratio: 4 / 5;
+      box-shadow: 0 4px 15px rgba(255, 0, 127, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .blog-card.show {
+      animation: slideIn 0.6s forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .blog-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.3);
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      padding: 30px 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header (left-aligned content) -->
+  <div class="header">
+    <a href="#about" class="about-link" onclick="showAbout()">about us</a>
+    <a href="https://www.facebook.com/share/1Vh3eAcivC/" target="_blank">
+      <img src="https://files.catbox.moe/luswcm.png" alt="Troll N Vision Logo" class="animated-logo">
+    </a>
+    <div class="tagline">
+      Truth comes first. After that, I'm buying 32 no. house with just 10% down
+    </div>
+  </div>
+
+  <!-- Video -->
+  <div id="videoContainer">
+    <video id="introVideo" playsinline muted>
+      <source src="https://files.catbox.moe/q1b78e.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- About Us Section -->
+  <div id="about" class="about-section">
+    <h2>About Us</h2>
+    <p>
+      Troll N Vision is a fearless movement of satire, fact, and fun.
+      We roast, we reveal, and we raise awareness—without filters.
+      Whether it’s politics or pop culture, we say what others won’t.
+      Powered by logic, memes, and a little bit of madness.
+    </p>
+  </div>
+
+  <!-- Blog Section -->
+  <div class="blog-section" id="blogSection">
+    <div class="blog-card"><a href="https://example.com/blog1" target="_blank"><img src="https://i.imgur.com/Vz4DMLb.jpg" /></a></div>
+    <div class="blog-card"><a href="https://example.com/blog2" target="_blank"><img src="https://i.imgur.com/N4pTYJQ.jpg" /></a></div>
+    <div class="blog-card"><a href="https://example.com/blog3" target="_blank"><img src="https://i.imgur.com/HpJUU2b.jpg" /></a></div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const video = document.getElementById('introVideo');
+        const blogSection = document.getElementById('blogSection');
+
+        video.style.display = 'block';
+        video.play();
+
+        video.onended = () => {
+          blogSection.scrollIntoView({ behavior: 'smooth' });
+
+          const cards = document.querySelectorAll('.blog-card');
+          cards.forEach((card, i) => {
+            setTimeout(() => {
+              card.classList.add('show');
+            }, i * 200);
+          });
+        };
+      }, 300);
+    });
+
+    function showAbout() {
+      const about = document.getElementById('about');
+      about.classList.add('show');
+    }
+  </script>
+
+  <footer>&copy; 2025 troll n vision. All rights reserved.</footer>
+
+</body>
+</html>
