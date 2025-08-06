@@ -4,36 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>troll n vision</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
-  
-  <!-- iOS specific meta tags for better video handling -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <!-- Preload critical resources -->
-  <link rel="preload" href="https://res.cloudinary.com/duivryuv6/image/upload/v1754407023/20250805_162138_qii1nd.png" as="image">
-  <link rel="preload" href="https://res.cloudinary.com/duivryuv6/image/upload/v1754407586/20250805_143049_e7hscw.png" as="image">
-  <link rel="preload" href="https://res.cloudinary.com/duivryuv6/image/upload/v1754407613/FB_IMG_1754376113986_czrvuo.jpg" as="image">
-  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #000;
       color: #fff;
       overflow-x: hidden;
     }
-
     .header {
       position: relative;
       padding: 30px 20px 10px;
@@ -41,51 +23,37 @@
       transform: translateY(20px);
       animation: headerEntrance 1.5s forwards 0.5s;
     }
-
     @keyframes headerEntrance {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     .about-link {
       position: absolute;
       top: 20px;
       right: 20px;
       font-size: 14px;
       font-weight: 600;
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
-      z-index: 10;
-      cursor: pointer;
       background: rgba(255, 0, 127, 0.2);
       padding: 8px 15px;
       border-radius: 20px;
       transition: all 0.3s ease;
+      z-index: 10;
     }
-
     .about-link:hover {
       background: rgba(255, 0, 127, 0.3);
       transform: translateY(-2px);
     }
-
     .animated-logo {
       width: 140px;
       animation: floatLogo 2.5s ease-in-out infinite alternate;
       display: block;
       transition: transform 0.3s ease;
     }
-
     @keyframes floatLogo {
-      from {
-        transform: translateY(0);
-      }
-      to {
-        transform: translateY(-6px);
-      }
+      from { transform: translateY(0); }
+      to { transform: translateY(-6px); }
     }
-
     .tagline {
       font-size: 14px;
       color: #bbb;
@@ -93,12 +61,10 @@
       animation: moveUp 2s ease-in-out infinite alternate;
       max-width: 500px;
     }
-
     @keyframes moveUp {
       from { transform: translateY(0); }
       to { transform: translateY(-3px); }
     }
-
     #videoContainer {
       width: 100%;
       position: relative;
@@ -108,22 +74,18 @@
       opacity: 0;
       transition: opacity 1s ease;
     }
-
     video {
       width: 100%;
       height: auto;
       display: block;
       object-fit: cover;
-      background: #000;
     }
-
     .about-section {
       padding: 60px 20px 50px;
       text-align: center;
       opacity: 0;
       transform: translateY(30px);
       transition: all 1s ease;
-      color: white;
       background: rgba(20, 20, 20, 0.9);
       border-radius: 20px;
       margin: 30px 20px;
@@ -132,12 +94,10 @@
       margin-right: auto;
       border: 1px solid #333;
     }
-
     .about-section.show {
       opacity: 1;
       transform: translateY(0);
     }
-
     .about-section h2 {
       font-size: 28px;
       margin-bottom: 15px;
@@ -145,7 +105,6 @@
       text-transform: uppercase;
       letter-spacing: 2px;
     }
-
     .about-section p {
       font-size: 16px;
       max-width: 600px;
@@ -153,7 +112,6 @@
       line-height: 1.7;
       color: #ddd;
     }
-
     .blog-section {
       display: flex;
       flex-wrap: wrap;
@@ -161,7 +119,6 @@
       padding: 30px 15px;
       gap: 30px;
     }
-
     .blog-card {
       background-color: #111;
       border-radius: 12px;
@@ -173,30 +130,19 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       opacity: 0;
       transform: translateY(30px);
-      position: relative;
       border: 1px solid rgba(255, 0, 127, 0.1);
     }
-
     .blog-card.show {
       animation: slideIn 0.6s forwards;
     }
-
     @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     .blog-card:hover {
       transform: scale(1.03);
       box-shadow: 0 6px 20px rgba(255, 0, 127, 0.4);
     }
-
     .blog-card img {
       width: 100%;
       height: 100%;
@@ -204,36 +150,9 @@
       display: block;
       transition: transform 0.5s ease;
     }
-    
     .blog-card:hover img {
       transform: scale(1.05);
     }
-
-    .blog-card::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(transparent 60%, rgba(0,0,0,0.8));
-      pointer-events: none;
-    }
-
-    footer {
-      text-align: center;
-      color: #666;
-      font-size: 13px;
-      padding: 30px 15px;
-      border-top: 1px solid #222;
-      margin-top: 20px;
-    }
-    
-    .brand-highlight {
-      color: #ff007f;
-      font-weight: 600;
-    }
-    
     .section-title {
       text-align: center;
       font-size: 28px;
@@ -243,9 +162,8 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    
     .section-title::after {
-      content: "";
+      content: '';
       display: block;
       width: 60px;
       height: 3px;
@@ -253,49 +171,10 @@
       margin: 10px auto;
       border-radius: 2px;
     }
-    
-    .content-wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 30px;
-    }
-    
-    .social-link {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #222;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .social-link:hover {
-      background: #ff007f;
-      transform: translateY(-3px);
-    }
-    
-    .social-link svg {
-      width: 20px;
-      height: 20px;
-      fill: #fff;
-    }
-
     .intro-animation {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #000;
       display: flex;
       justify-content: center;
@@ -303,178 +182,131 @@
       z-index: 100;
       animation: fadeOut 1s forwards 2.5s;
     }
-
     @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
+      to { opacity: 0; visibility: hidden; }
     }
-
     .intro-logo {
       width: 120px;
       animation: pulse 1.5s infinite alternate;
     }
-
     @keyframes pulse {
       0% { transform: scale(0.95); }
       100% { transform: scale(1.05); }
+    }
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      padding: 30px 15px;
+      border-top: 1px solid #222;
+      margin-top: 20px;
+    }
+    .brand-highlight {
+      color: #ff007f;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
 
-  <!-- Intro Animation -->
   <div class="intro-animation">
     <img src="https://res.cloudinary.com/duivryuv6/image/upload/v1754406694/20250805_115444_lerrfv.png" alt="Troll N Vision Logo" class="intro-logo">
   </div>
-  
+
   <div class="content-wrapper">
-    <!-- Header (left-aligned content) -->
     <div class="header">
       <a href="#about" class="about-link" onclick="showAbout()">about us</a>
       <a href="https://www.facebook.com/share/1Vh3eAcivC/" target="_blank">
-        <img src="https://res.cloudinary.com/duivryuv6/image/upload/v1754406694/20250805_115444_lerrfv.png" alt="Troll N Vision Logo" class="animated-logo">
+        <img src="https://res.cloudinary.com/duivryuv6/image/upload/v1754406694/20250805_115444_lerrfv.png" alt="Logo" class="animated-logo">
       </a>
-      <div class="tagline">
-        Truth comes first. After that, I'm buying 32 no. house with just 10% down
-      </div>
+      <div class="tagline">Truth comes first. After that, I'm buying 32 no. house with just 10% down</div>
     </div>
 
-    <!-- Video Section -->
     <div id="videoContainer">
-      <!-- Actual video element -->
       <video id="introVideo" playsinline muted>
         <source src="https://res.cloudinary.com/duivryuv6/video/upload/v1754392309/New_Project_2_B53800D_jgcnpj.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
 
-    <!-- About Us Section -->
     <div id="about" class="about-section">
       <h2>About Us</h2>
       <p>
         <span class="brand-highlight">Troll N Vision</span> is a fearless movement of satire, fact, and fun.
-        We roast, we reveal, and we raise awareness—without filters.
-        Whether it’s politics or pop culture, we say what others won’t.
-        Powered by logic, memes, and a little bit of madness.
+        We roast, we reveal, and we raise awareness—without filters. Powered by logic, memes, and a little bit of madness.
       </p>
-      
-      <div class="social-links">
-        <a href="https://facebook.com" target="_blank" class="social-link">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"></path>
-          </svg>
-        </a>
-        <a href="https://instagram.com" target="_blank" class="social-link">
-          <svg viewBox="0 0 24 24">
-            <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path>
-          </svg>
-        </a>
-        <a href="https://twitter.com" target="_blank" class="social-link">
-          <svg viewBox="0 0 24 24">
-            <path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"></path>
-          </svg>
-        </a>
-      </div>
     </div>
 
-    <!-- Blog Section -->
     <h2 class="section-title">Latest Content</h2>
-    <div class="blog-section" id="blogSection">
-      <div class="blog-card">
-        <a href="https://www.facebook.com/share/p/1BL5M5DJzm/" target="_blank">
-          <img src="https://res.cloudinary.com/duivryuv6/image/upload/v1754407023/20250805_162138_qii1nd.png" alt="Political Satire" loading="eager" />
-        </a>
-      </div>
-      <div class="blog-card">
-        <a href="https://www.facebook.com/61558034593933/posts/pfbid087DnwYnVaqMchazwUBYsyALdosskhvNwg4zqNwHTrMotLh2r4khhdrR3wAwnZVPol/?mibextid=Nif5oz" target="_blank">
-          <img src="https://res.cloudinary.com/duivryuv6/image/upload/v1754407586/20250805_143049_e7hscw.png" alt="Social Commentary" loading="eager" />
-        </a>
-      </div>
-      <div class="blog-card">
-        <a href="https://www.facebook.com/share/p/1GVqbQYbZk/" target="_blank">
-          <img src="https://res.cloudinary.com/duivryuv6/image/upload/v1754407613/FB_IMG_1754376113986_czrvuo.jpg" alt="Cultural Critique" loading="eager" />
-        </a>
-      </div>
-    </div>
+    <div class="blog-section" id="blogSection"></div>
   </div>
-
-  <!-- Script -->
-  <script>
-    // Preload images immediately
-    const imageUrls = [
-      "https://res.cloudinary.com/duivryuv6/image/upload/v1754407023/20250805_162138_qii1nd.png",
-      "https://res.cloudinary.com/duivryuv6/image/upload/v1754407586/20250805_143049_e7hscw.png",
-      "https://res.cloudinary.com/duivryuv6/image/upload/v1754407613/FB_IMG_1754376113986_czrvuo.jpg"
-    ];
-
-    imageUrls.forEach(url => {
-      const img = new Image();
-      img.src = url;
-    });
-
-    // Start video after intro animation
-    setTimeout(() => {
-      const videoContainer = document.getElementById('videoContainer');
-      const video = document.getElementById('introVideo');
-      
-      // Show video container
-      videoContainer.style.opacity = '1';
-      
-      // Play video
-      video.play()
-        .then(() => {
-          console.log('Video started successfully');
-          // When video ends, show blog section
-          video.onended = () => {
-            document.getElementById('blogSection').scrollIntoView({ behavior: 'smooth' });
-            animateBlogCards();
-          };
-        })
-        .catch(error => {
-          console.log('Video autoplay failed, attempting fallback:', error);
-          
-          // If autoplay fails, try with promise
-          const promise = video.play();
-          
-          if (promise !== undefined) {
-            promise
-              .then(() => {
-                console.log('Video started via promise');
-                video.onended = () => {
-                  document.getElementById('blogSection').scrollIntoView({ behavior: 'smooth' });
-                  animateBlogCards();
-                };
-              })
-              .catch(error => {
-                console.error('Video playback failed:', error);
-                // If still fails, scroll to content after delay
-                setTimeout(() => {
-                  document.getElementById('blogSection').scrollIntoView({ behavior: 'smooth' });
-                  animateBlogCards();
-                }, 3000);
-              });
-          }
-        });
-    }, 3000);
-    
-    function showAbout() {
-      const about = document.getElementById('about');
-      about.classList.add('show');
-    }
-    
-    function animateBlogCards() {
-      const cards = document.querySelectorAll('.blog-card');
-      cards.forEach((card, i) => {
-        setTimeout(() => {
-          card.classList.add('show');
-        }, i * 200);
-      });
-    }
-  </script>
 
   <footer>&copy; 2025 <span class="brand-highlight">troll n vision</span>. All rights reserved.</footer>
 
+  <script>
+    const SPREADSHEET_ID = '1ZP1fegcSW94f-Pd-P6cFXUh0eXOKIdqsvI7xFjfRU6k';
+    const SHEET_NAME = 'Sheet1';
+
+    function loadBlogEntries() {
+      const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:parseSheet&tq=&sheet=${encodeURIComponent(SHEET_NAME)}`;
+
+      window.parseSheet = (res) => {
+        const rows = res.table.rows;
+        const container = document.getElementById('blogSection');
+        container.innerHTML = '';
+
+        [...rows].reverse().forEach((r, i) => {
+          const img = r.c[0]?.v;
+          const link = r.c[1]?.v;
+          if (!img || !link) return;
+
+          const card = document.createElement('div');
+          card.className = 'blog-card';
+
+          const a = document.createElement('a');
+          a.href = link;
+          a.target = '_blank';
+
+          const image = document.createElement('img');
+          image.src = img;
+          image.alt = '';
+          image.loading = 'eager';
+
+          a.appendChild(image);
+          card.appendChild(a);
+          container.appendChild(card);
+        });
+
+        animateBlogCards();
+      };
+
+      const script = document.createElement('script');
+      script.src = url;
+      document.body.appendChild(script);
+    }
+
+    function animateBlogCards() {
+      document.querySelectorAll('.blog-card').forEach((card, i) => {
+        setTimeout(() => card.classList.add('show'), i * 200);
+      });
+    }
+
+    function showAbout() {
+      document.getElementById('about').classList.add('show');
+    }
+
+    setTimeout(() => {
+      const videoContainer = document.getElementById('videoContainer');
+      const video = document.getElementById('introVideo');
+      videoContainer.style.opacity = '1';
+      video.play().catch(() => {});
+      video.onended = () => {
+        document.getElementById('blogSection').scrollIntoView({ behavior: 'smooth' });
+        loadBlogEntries();
+      };
+    }, 3000);
+
+    window.addEventListener('DOMContentLoaded', loadBlogEntries);
+  </script>
 </body>
-</html>
+    </html>
