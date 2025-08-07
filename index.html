@@ -223,8 +223,8 @@
     </div>
 
     <div id="videoContainer">
-      <video id="introVideo" playsinline muted>
-        <source src="https://res.cloudinary.com/duivryuv6/video/upload/v1754392309/New_Project_2_B53800D_jgcnpj.mp4" type="video/mp4" />
+      <video id="introVideo" playsinline muted autoplay loop>
+        <source src="https://res.cloudinary.com/duivryuv6/video/upload/w_1000/q_auto:best/f_auto/v1754558332/New_Project_2_94EA7F2_qzckem.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -246,10 +246,10 @@
   <script>
     const SPREADSHEET_ID = '1ZP1fegcSW94f-Pd-P6cFXUh0eXOKIdqsvI7xFjfRU6k';
     const SHEET_NAME = 'Sheet1';
+    let hasScrolled = false;
 
     function loadBlogEntries() {
       const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:parseSheet&tq=&sheet=${encodeURIComponent(SHEET_NAME)}`;
-
       window.parseSheet = (res) => {
         const rows = res.table.rows;
         const container = document.getElementById('blogSection');
@@ -300,13 +300,24 @@
       const video = document.getElementById('introVideo');
       videoContainer.style.opacity = '1';
       video.play().catch(() => {});
-      video.onended = () => {
-        document.getElementById('blogSection').scrollIntoView({ behavior: 'smooth' });
-        loadBlogEntries();
-      };
+
+      video.addEventListener('loadedmetadata', () => {
+        video.addEventListener('timeupdate', () => {
+          if (!hasScrolled && video.duration && video.currentTime / video.duration >= 0.98) {
+            hasScrolled = true;
+            document.getElementById('blogSection').scrollIntoView({ behavior: 'smooth' });
+            loadBlogEntries();
+          }
+        });
+      });
     }, 3000);
 
-    window.addEventListener('DOMContentLoaded', loadBlogEntries);
+    window.addEventListener('scroll', () => {
+      if (!hasScrolled && window.scrollY > 100) {
+        hasScrolled = true;
+        loadBlogEntries();
+      }
+    });
   </script>
 </body>
-    </html>
+  </html>
